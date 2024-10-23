@@ -43,6 +43,7 @@ export async function handlePhotosScrape(dashboardPage: Page) {
         await handleZipResult(result, db, dbPath);
 
         console.log(`Done with ${result.title}`);
+        await persist(db, dbPath);
     }
 }
 
