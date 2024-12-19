@@ -2,21 +2,9 @@ import { Page } from "@playwright/test";
 import { FileDownload } from "./types";
 
 export async function downloadPhotosFrom(
-    { url, username, password, downloadDir, schoolName, dashboardPage, downloads }:
-        { url: string, username: string, password: string, schoolName: string, downloadDir: string, dashboardPage: Page, downloads: string[] }) {
-    await dashboardPage.goto(url);
-    const loginPagePromise = dashboardPage.waitForEvent('popup');
-    await dashboardPage.getByRole('link', { name: 'Login' }).click();
-    const loginPage = await loginPagePromise;
-    await loginPage.getByLabel('Emailadres').click();
-    await loginPage.getByLabel('Emailadres').fill(username);
-    await loginPage.getByLabel('Emailadres').press('Tab');
-    await loginPage.getByLabel('Wachtwoord').fill(password);
-    await loginPage.getByRole('button', { name: 'Inloggen' }).click();
-
-    const pagePromise = loginPage.waitForEvent('popup');
-    await loginPage.getByText(schoolName).click();
-    const page = await pagePromise;
+    { url, username, password, downloadDir, schoolName, page, downloads }:
+        { url: string, username: string, password: string, schoolName: string, downloadDir: string, page: Page, downloads: string[] }) {
+    await page.goto(url + '/login');
 
     await page.getByLabel('Emailadres').click();
     await page.getByLabel('Emailadres').fill(username);
